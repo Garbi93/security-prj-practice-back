@@ -7,7 +7,17 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface TodoService {
 
+    // 조회 기능
     TodoDTO get(Long tno);
+
+    // 등록 기능
+    Long register(TodoDTO dto);
+
+    // 수정 기능
+    void modify(TodoDTO dto);
+
+    // 삭제 기능
+    void remove(Long tno);
 
     default TodoDTO entityToDTO(Todo todo) {
         return TodoDTO.builder()
