@@ -1,13 +1,18 @@
 package com.example.securityprjpracticeback.service;
 
 import com.example.securityprjpracticeback.domain.Todo;
+import com.example.securityprjpracticeback.dto.PageRequestDTO;
+import com.example.securityprjpracticeback.dto.PageResponseDTO;
 import com.example.securityprjpracticeback.dto.TodoDTO;
 import com.example.securityprjpracticeback.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -60,5 +65,25 @@ public class TodoServiceImpl implements TodoService{
     public void remove(Long tno) {
         // id 값으로 삭제하기
         todoRepository.deleteById(tno);
+    }
+
+    // 페이징 기능
+    @Override
+    public PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO) {
+        // JPA
+        Page<Todo> result = todoRepository.search1(pageRequestDTO);
+
+        // Todo List => TodoDTO List 가 되어야 한다.
+        List<TodoDTO> dtoList =  result.get().map(todo -> entityToDTO(todo)).collect(Collectors.toList());
+
+        // 목록 데이터 생성
+        PageResponseDTO<TodoDTO> responseDTO =
+                PageResponseDTO.<TodoDTO>withAll()
+                        .dtoList(dtoList)
+                        .pageRequestDTO(pageRequestDTO)
+                        .total(result.getTotalElements())
+                        .build();
+
+        return responseDTO;
     }
 }

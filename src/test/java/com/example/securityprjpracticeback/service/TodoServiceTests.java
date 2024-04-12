@@ -1,6 +1,7 @@
 package com.example.securityprjpracticeback.service;
 
 
+import com.example.securityprjpracticeback.dto.PageRequestDTO;
 import com.example.securityprjpracticeback.dto.TodoDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -35,6 +36,13 @@ public class TodoServiceTests {
 
         log.info(todoService.register(todoDTO));
 
+    }
+
+    @Test
+    public void testGetList() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder().page(11).build();
+
+        log.info(todoService.getList(pageRequestDTO));
     }
 
 }

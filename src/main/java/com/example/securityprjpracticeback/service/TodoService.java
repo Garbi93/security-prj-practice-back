@@ -1,6 +1,8 @@
 package com.example.securityprjpracticeback.service;
 
 import com.example.securityprjpracticeback.domain.Todo;
+import com.example.securityprjpracticeback.dto.PageRequestDTO;
+import com.example.securityprjpracticeback.dto.PageResponseDTO;
 import com.example.securityprjpracticeback.dto.TodoDTO;
 import jakarta.transaction.Transactional;
 
@@ -18,6 +20,10 @@ public interface TodoService {
 
     // 삭제 기능
     void remove(Long tno);
+
+    // 페이징 기능
+    PageResponseDTO<TodoDTO> getList(PageRequestDTO pageRequestDTO);
+
 
     default TodoDTO entityToDTO(Todo todo) {
         return TodoDTO.builder()
