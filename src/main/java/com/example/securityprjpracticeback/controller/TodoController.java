@@ -19,11 +19,13 @@ public class TodoController {
 
     private final TodoService todoService;
 
+    // 한개의 투두 조회
     @GetMapping("/{tno}")
     public TodoDTO get(@PathVariable("tno") Long tno) {
         return todoService.get(tno);
     }
 
+    // 투두 리스트 목록 조회
     @GetMapping("list")
     public PageResponseDTO<TodoDTO> list(PageRequestDTO pageRequestDTO) {
         log.info("list..........." + pageRequestDTO);
