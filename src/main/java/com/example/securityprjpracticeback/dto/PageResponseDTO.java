@@ -12,7 +12,7 @@ public class PageResponseDTO<E> {
 
     private List<E> dtoList;
 
-    private List<Integer> pageNumberList;
+    private List<Integer> pageNumList;
 
     private PageRequestDTO pageRequestDTO;
 
@@ -45,7 +45,7 @@ public class PageResponseDTO<E> {
         this.next = totalCount > end * pageRequestDTO.getSize();
 
         // 현재 페이지 번호의 목록
-        this.pageNumberList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+        this.pageNumList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
 
         // 이전 페이지 번호 -> 이전 페이지 버튼 이 있다면 start - 1 해라
         this.prevPage = prev ? start - 1 : 0;
