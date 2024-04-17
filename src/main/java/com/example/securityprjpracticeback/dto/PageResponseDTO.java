@@ -53,6 +53,9 @@ public class PageResponseDTO<E> {
         // 다음 페이지 번호 -> 다음 페이지 버튼이 있다면 end - 1 해라
         this.nextPage = next ? end + 1 : 0;
 
+        this.totalPage = this.pageNumList.size();
+
+        this.current = pageRequestDTO.getPage();
 
     }
 }
