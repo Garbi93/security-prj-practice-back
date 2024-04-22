@@ -62,7 +62,7 @@ public class ProductServiceImpl implements ProductService{
 
         return PageResponseDTO.<ProductDTO>withAll()
                 .dtoList(dtoList)
-                .total(totalCount)
+                .totalCount(totalCount)
                 .pageRequestDTO(pageRequestDTO)
                 .build();
     }
