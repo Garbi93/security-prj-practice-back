@@ -1,6 +1,9 @@
 package com.example.securityprjpracticeback.controller;
 
+import com.example.securityprjpracticeback.dto.PageRequestDTO;
+import com.example.securityprjpracticeback.dto.PageResponseDTO;
 import com.example.securityprjpracticeback.dto.ProductDTO;
+import com.example.securityprjpracticeback.service.ProductService;
 import com.example.securityprjpracticeback.util.CustomFileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -19,6 +22,8 @@ import java.util.Map;
 public class ProductController {
 
     private final CustomFileUtil fileUtil;
+
+    private final ProductService productService;
 
     @PostMapping("/")
     public Map<String, String> register(ProductDTO productDTO) {
@@ -40,6 +45,9 @@ public class ProductController {
         return fileUtil.getFile(fileName);
     }
 
-
-
+    // 목록 데이터 조회
+    @GetMapping("/list")
+    public PageResponseDTO<ProductDTO> list(PageRequestDTO pageRequestDTO) {
+        return productService.getList(pageRequestDTO);
+    }
 }
