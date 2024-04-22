@@ -104,7 +104,7 @@ public class ProductController {
 
             // 기존 업로드 파일들 이름을 가져와서 새로 업로드될 파일들 이름을 순회하여 비교하며 없는 애들을 찾아 변수에 저장.
             List<String> removeFiles =
-            oldFileNames.stream().filter(fileName -> uploadedFileNames.indexOf(fileName) == -1).collect(Collectors.toList());
+                    oldFileNames.stream().filter(fileName -> uploadedFileNames.indexOf(fileName) == -1).collect(Collectors.toList());
 
             // 없는 파일 정보는 지워준다.
             fileUtil.deleteFiles(removeFiles);
@@ -113,4 +113,21 @@ public class ProductController {
 
         return Map.of("RESULT", "SUCCESS");
     }
+
+    // 상품 삭제
+    @DeleteMapping("/{pno}")
+    public Map<String, String> remove(@PathVariable Long pno) {
+        // 기존 이미지 파일들을 삭제 하기 위해
+        // 해당 상품 이미지 목록을 조회한다.
+        List<String> oldFileNames = productService.get(pno).getUploadFileNames();
+
+        // 해당 상품 DB 삭제 하기
+        productService.remove(pno);
+
+        // 해당 상품 이미지 목록 삭제하기
+        fileUtil.deleteFiles(oldFileNames);
+
+        return Map.of("RESULT", "SUCCESS");
+    }
+
 }
