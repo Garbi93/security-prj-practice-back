@@ -32,6 +32,11 @@ public class CustomSecurityConfig {
             httpSecurityCsrfConfigurer.disable();
         });
 
+        // 회원 로그인 경로 지정
+        http.formLogin(config -> {
+            config.loginPage("/api/member/login");
+        });
+
         return http.build();
     }
 
