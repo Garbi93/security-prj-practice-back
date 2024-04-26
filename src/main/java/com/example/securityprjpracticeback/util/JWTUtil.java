@@ -12,8 +12,8 @@ import java.util.Map;
 
 @Log4j2
 public class JWTUtil {
-    @Value("${jwt.key.value}")
-    private static String key;
+    // 30자리가 넘는 아무 숫자르 넣어야 오류가 발생 하지 않는다.
+    private static String key = "1234567890123456789012345678901234567890";
 
     public static String generateToken(Map<String, Object> valueMap, int min) {
         SecretKey key = null;

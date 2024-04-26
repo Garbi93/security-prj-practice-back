@@ -20,7 +20,7 @@ public class MemberDTO extends User {
         super(
                 email,
                 pw,
-                roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE+" + str)).collect(Collectors.toList())
+                roleNames.stream().map(str -> new SimpleGrantedAuthority("ROLE_" + str)).collect(Collectors.toList())
         );
 
         this.email = email;
