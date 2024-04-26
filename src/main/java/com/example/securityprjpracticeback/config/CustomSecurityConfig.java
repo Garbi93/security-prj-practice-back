@@ -1,10 +1,13 @@
 package com.example.securityprjpracticeback.config;
 
+import com.example.securityprjpracticeback.security.handler.APILoginFailHandler;
+import com.example.securityprjpracticeback.security.handler.APILoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -27,14 +30,21 @@ public class CustomSecurityConfig {
             httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource());
         });
 
-        //  csrf 사용안하는 설정
-        http.csrf(httpSecurityCsrfConfigurer -> {
-            httpSecurityCsrfConfigurer.disable();
+        http.sessionManagement(httpSecuritySessionManagementConfigurer -> {
+            httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.NEVER);
         });
 
-        // 회원 로그인 경로 지정
+        //  csrf 사용안하는 설정
+        http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
+
+        // 로그인 로직
         http.formLogin(config -> {
+            // 회원 로그인 경로 지정
             config.loginPage("/api/member/login");
+            // 로그인 성공시 로직
+            config.successHandler(new APILoginSuccessHandler());
+            // 로그인 실패시 로직
+            config.failureHandler(new APILoginFailHandler());
         });
 
         return http.build();
