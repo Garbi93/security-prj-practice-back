@@ -3,6 +3,7 @@ package com.example.securityprjpracticeback.config;
 import com.example.securityprjpracticeback.security.filter.JWTCheckFilter;
 import com.example.securityprjpracticeback.security.handler.APILoginFailHandler;
 import com.example.securityprjpracticeback.security.handler.APILoginSuccessHandler;
+import com.example.securityprjpracticeback.security.handler.CustomAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
@@ -53,6 +54,12 @@ public class CustomSecurityConfig {
 
         // JWT filter 검증 거치게 하기
         http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
+
+        http.exceptionHandling(config -> {
+
+            config.accessDeniedHandler(new CustomAccessDeniedHandler());
+
+        });
 
         return http.build();
     }
