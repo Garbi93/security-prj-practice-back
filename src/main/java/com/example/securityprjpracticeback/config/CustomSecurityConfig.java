@@ -1,5 +1,6 @@
 package com.example.securityprjpracticeback.config;
 
+import com.example.securityprjpracticeback.security.filter.JWTCheckFilter;
 import com.example.securityprjpracticeback.security.handler.APILoginFailHandler;
 import com.example.securityprjpracticeback.security.handler.APILoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -46,6 +48,9 @@ public class CustomSecurityConfig {
             // 로그인 실패시 로직
             config.failureHandler(new APILoginFailHandler());
         });
+
+        // JWT filter 검증 거치게 하기
+        http.addFilterBefore(new JWTCheckFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

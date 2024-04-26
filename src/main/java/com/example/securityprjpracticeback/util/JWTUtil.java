@@ -2,6 +2,7 @@ package com.example.securityprjpracticeback.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.crypto.SecretKey;
@@ -9,11 +10,11 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
 
+@Log4j2
 public class JWTUtil {
     @Value("${jwt.key.value}")
     private static String key;
 
-    // JWT 문자열 만드는 기능
     public static String generateToken(Map<String, Object> valueMap, int min) {
         SecretKey key = null;
         try{
@@ -53,5 +54,4 @@ public class JWTUtil {
         }
         return claim;
     }
-
 }
