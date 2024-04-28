@@ -12,8 +12,9 @@ import java.util.Map;
 
 @Log4j2
 public class JWTUtil {
-    @Value("${jwt.key.value}")
-    private static String key;
+
+    private static String key = "1234567890123456789012345678901234567890";
+
 
     public static String generateToken(Map<String, Object> valueMap, int min) {
         SecretKey key = null;
