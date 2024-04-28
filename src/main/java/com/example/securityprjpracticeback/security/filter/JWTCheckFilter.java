@@ -25,7 +25,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
 
 
         // true == not check
-
+        // TODO : security 적용중 동일 객체를 2개를 같이 객체 화 하여 불러오는 문제 발생 위치 찾기 필요 함
         String path = request.getRequestURI();
 
         log.info("check uri ------------" + path);
